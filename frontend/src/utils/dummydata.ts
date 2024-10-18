@@ -1,0 +1,225 @@
+// dummydata.ts
+
+const data = [
+  {
+    _id: "66fe5c345123ef6095b77520",
+    title: "Understanding JSON",
+    author: "Jane Doe",
+    date: "2023-10-01",
+    content:
+      "JSON (JavaScript Object Notation) is a lightweight data interchange format...",
+    tags: ["JSON", "Data", "Programming"],
+    isApproved: true,
+    rating: 4,
+    views: 6,
+  },
+  {
+    _id: "66fe5c345123ef6095b77521",
+    title: "Exploring the Universe",
+    author: "John Smith",
+    date: "2023-09-28",
+    content:
+      "The universe is vast and mysterious, filled with countless galaxies and stars...",
+    tags: ["Space", "Astronomy", "Science"],
+    isApproved: false,
+    rating: 3,
+    views: 24,
+  },
+  {
+    _id: "66fe5c345123ef6095b77522",
+    title: "Healthy Eating Habits",
+    author: "Emily Johnson",
+    date: "2023-10-02",
+    content:
+      "Maintaining a balanced diet is crucial for overall health and well-being...",
+    tags: ["Health", "Nutrition", "Lifestyle"],
+    isApproved: true,
+    rating: 5,
+    views: 17,
+  },
+  {
+    _id: "66ff553b7da10b214a4a81c4",
+    title: "Understanding JSON",
+    author: "Jane Doe",
+    date: "2023-10-01",
+    content:
+      "JSON (JavaScript Object Notation) is a lightweight data interchange format...",
+    tags: ["JSON", "Data", "Programming"],
+    isApproved: true,
+    rating: 4,
+    views: 4,
+  },
+  {
+    _id: "66ff553b7da10b214a4a81c5",
+    title: "Exploring the Universe",
+    author: "John Smith",
+    date: "2023-09-28",
+    content:
+      "The universe is vast and mysterious, filled with countless galaxies and stars...",
+    tags: ["Space", "Astronomy", "Science"],
+    isApproved: false,
+    rating: 3,
+    views: 12,
+  },
+  {
+    _id: "66ff553b7da10b214a4a81c6",
+    title: "Healthy Eating Habits",
+    author: "Emily Johnson",
+    date: "2023-10-02",
+    content:
+      "Maintaining a balanced diet is crucial for overall health and well-being...",
+    tags: ["Health", "Nutrition", "Lifestyle"],
+    isApproved: true,
+    rating: 5,
+  },
+  {
+    _id: "66ff55507da10b214a4a81c7",
+    title: "Understanding JSON",
+    author: "Jane Doe",
+    date: "2023-10-01",
+    content:
+      "JSON (JavaScript Object Notation) is a lightweight data interchange format...",
+    tags: ["JSON", "Data", "Programming"],
+    isApproved: true,
+    rating: 4,
+  },
+  {
+    _id: "66ff55507da10b214a4a81c8",
+    title: "Exploring the Universe",
+    author: "John Smith",
+    date: "2023-09-28",
+    content:
+      "The universe is vast and mysterious, filled with countless galaxies and stars...",
+    tags: ["Space", "Astronomy", "Science"],
+    isApproved: false,
+    rating: 3,
+    views: 2,
+  },
+  {
+    _id: "66ff55507da10b214a4a81c9",
+    title: "Healthy Eating Habits",
+    author: "Emily Johnson",
+    date: "2023-10-02",
+    content:
+      "Maintaining a balanced diet is crucial for overall health and well-being...",
+    tags: ["Health", "Nutrition", "Lifestyle"],
+    isApproved: true,
+    rating: 5,
+    views: 6,
+  },
+  {
+    _id: "66ff55507da10b214a4a81ca",
+    title: "Mastering Time Management",
+    author: "Olivia Martin",
+    date: "2023-10-07",
+    content:
+      "Effective time management can lead to greater productivity and improved work-life balance...",
+    tags: ["Productivity", "Time Management", "Self-Improvement"],
+    isApproved: true,
+    rating: 5,
+  },
+  {
+    _id: "66ff55507da10b214a4a81cb",
+    title: "The Art of Public Speaking",
+    author: "James Wilson",
+    date: "2023-10-08",
+    content:
+      "Public speaking is an invaluable skill. Here are some tips to improve your speaking abilities...",
+    tags: ["Public Speaking", "Communication", "Skills"],
+    isApproved: true,
+    rating: 4,
+    views: 2,
+  },
+  {
+    _id: "66ff55507da10b214a4a81cc",
+    title: "Digital Marketing Essentials",
+    author: "Ava Taylor",
+    date: "2023-10-09",
+    content:
+      "Understanding the fundamentals of digital marketing is crucial for businesses today...",
+    tags: ["Marketing", "Digital", "Business"],
+    isApproved: true,
+    rating: 5,
+  },
+  {
+    _id: "66ff55507da10b214a4a81cd",
+    title: "Exploring Artificial Intelligence",
+    author: "Benjamin Thomas",
+    date: "2023-10-10",
+    content:
+      "Artificial Intelligence is transforming various industries. Discover its potential and applications...",
+    tags: ["AI", "Technology", "Innovation"],
+    isApproved: false,
+    rating: 3,
+  },
+  {
+    _id: "66ff55507da10b214a4a81ce",
+    title: "The Benefits of Yoga",
+    author: "Charlotte Garcia",
+    date: "2023-10-11",
+    content:
+      "Yoga offers numerous physical and mental health benefits. Here's how to get started...",
+    tags: ["Health", "Fitness", "Yoga"],
+    isApproved: true,
+    rating: 4,
+  },
+  {
+    _id: "66ff55507da10b214a4a81cf",
+    title: "Creative Writing Tips",
+    author: "Lucas White",
+    date: "2023-10-12",
+    content:
+      "Unlock your creativity with these writing tips that can help you craft compelling stories...",
+    tags: ["Writing", "Creativity", "Literature"],
+    isApproved: true,
+    rating: 5,
+  },
+  {
+    _id: "66ff55507da10b214a4a81d0",
+    title: "Understanding Blockchain",
+    author: "Mia Anderson",
+    date: "2023-10-13",
+    content:
+      "Blockchain technology is revolutionizing how we think about data and transactions...",
+    tags: ["Blockchain", "Technology", "Finance"],
+    isApproved: false,
+    rating: 3,
+    views: 2,
+  },
+  {
+    _id: "66ff55507da10b214a4a81d1",
+    title: "Healthy Living: A Guide",
+    author: "Ella Martinez",
+    date: "2023-10-14",
+    content:
+      "Adopting a healthy lifestyle can significantly improve your quality of life. Here's how to start...",
+    tags: ["Health", "Lifestyle", "Wellness"],
+    isApproved: true,
+    rating: 5,
+  },
+  {
+    _id: "66ff55507da10b214a4a81d2",
+    title: "The Science of Happiness",
+    author: "Daniel Robinson",
+    date: "2023-10-15",
+    content:
+      "Explore the psychological aspects of happiness and how to cultivate it in your life...",
+    tags: ["Psychology", "Happiness", "Self-Help"],
+    isApproved: true,
+    rating: 4,
+    views: 4,
+  },
+  {
+    _id: "66ff55507da10b214a4a81d3",
+    title: "Travel Safety Tips",
+    author: "Sophia Clark",
+    date: "2023-10-16",
+    content:
+      "Stay safe while traveling with these essential tips that every traveler should know...",
+    tags: ["Travel", "Safety", "Tips"],
+    isApproved: true,
+    rating: 5,
+  },
+];
+
+export default data;

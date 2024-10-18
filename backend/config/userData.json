@@ -1,0 +1,17 @@
+[
+  {
+    "UserType": "Admin",
+    "Email": "admin@example.com",
+    "Password": "SecurePassword123"
+  },
+  {
+    "UserType": "Analysis",
+    "Email": "analysis@example.com",
+    "Password": "AnalysisPassword789"
+  },
+  {
+    "UserType": "User",
+    "Email": "user@example.com",
+    "Password": "UserPassword456"
+  }
+]
