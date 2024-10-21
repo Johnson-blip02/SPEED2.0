@@ -15,7 +15,9 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json()); // To parse incoming JSON requests
 
 // Basic route for testing
-app.get("/", (req, res) => res.send("Hello world!"));
+app.get("/", (req, res) =>
+  res.status(200).json("Welcome, your app is working well")
+);
 
 // Use Routes
 app.use("/api/articles", articles);
