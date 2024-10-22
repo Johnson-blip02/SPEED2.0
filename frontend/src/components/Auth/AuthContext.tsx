@@ -1,8 +1,14 @@
-import { createContext, useState, useEffect, FC, ReactNode } from "react";
+import { createContext, useState, FC, ReactNode } from "react";
+
+// Define the user object shape with userType
+interface User {
+  email: string;
+  userType: "Moderation" | "Analysis" | "User"; // Define possible UserType values
+}
 
 interface AuthContextProps {
-  user: { email: string } | null;
-  login: (email: string) => void;
+  user: User | null;
+  login: (email: string, userType: "Moderation" | "Analysis" | "User") => void;
   logout: () => void;
 }
 
@@ -13,10 +19,14 @@ export const AuthContext = createContext<AuthContextProps>({
 });
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<{ email: string } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
-  const login = (email: string) => {
-    setUser({ email });
+  // Modify login to accept userType along with email
+  const login = (
+    email: string,
+    userType: "Moderation" | "Analysis" | "User"
+  ) => {
+    setUser({ email, userType });
   };
 
   const logout = () => {

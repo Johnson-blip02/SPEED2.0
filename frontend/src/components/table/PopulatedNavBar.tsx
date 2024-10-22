@@ -16,23 +16,49 @@ const PopulatedNavBar: FC<PopulatedNavBarProps> = ({ toggleColorMode }) => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {/* Home NavItem */}
           <Box ml={0} flexGrow={1}>
             <NavItem route="/" end>
               Home
             </NavItem>
           </Box>
+
+          {/* Show "Moderate articles" link only if userType is "Moderation" */}
+          {user?.userType === "Moderation" && (
+            <Box ml={4}>
+              <NavItem route="/moderation">Moderate articles</NavItem>
+            </Box>
+          )}
+          {user?.userType === "Moderation" && (
+            <Box ml={4}>
+              <NavItem route="/articles/deletion">Delete articles</NavItem>
+            </Box>
+          )}
+
+          {/* Show "Analysis articles" and "Delete articles" if userType is "Analysis" */}
+          {user?.userType === "Analysis" && (
+            <Box ml={4}>
+              <NavItem route="/analysis">Analysis articles</NavItem>
+            </Box>
+          )}
+          {user?.userType === "Analysis" && (
+            <Box ml={4}>
+              <NavItem route="/articles/deletion">Delete articles</NavItem>
+            </Box>
+          )}
+
+          {/* Common Articles Dropdown available for all users */}
           <Box ml={4}>
             <NavItem dropdown route="/articles">
               Articles <IoMdArrowDropdown />
               <NavDropdown>
                 <NavItem route="/articles">View articles</NavItem>
                 <NavItem route="/articles/submission">Submit articles</NavItem>
-                <NavItem route="/articles/deletion">Delete articles</NavItem>
-                <NavItem route="/moderation">Moderate articles</NavItem>
-                <NavItem route="/analysis">Analysis articles</NavItem>
               </NavDropdown>
             </NavItem>
           </Box>
+
+          {/* If no user is logged in, show Login and Register options */}
           {!user ? (
             <>
               <Box ml={4}>
@@ -51,6 +77,8 @@ const PopulatedNavBar: FC<PopulatedNavBarProps> = ({ toggleColorMode }) => {
               </Box>
             </>
           )}
+
+          {/* Theme Toggle Button */}
           <Box ml={4}>
             <Button
               onClick={toggleColorMode}

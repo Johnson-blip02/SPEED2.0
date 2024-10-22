@@ -4,7 +4,7 @@ const articleSchema = new mongoose.Schema({
   id: Number,
   title: String,
   author: String,
-  date: String, // Changed to String
+  date: String,
   content: String,
   tags: [String],
   isApproved: Boolean,

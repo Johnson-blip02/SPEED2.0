@@ -8,6 +8,9 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
+// Use the environment variable for the backend URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function SubmitPage() {
   const [article, setArticle] = useState({
     title: "",
@@ -41,10 +44,7 @@ export default function SubmitPage() {
     };
 
     try {
-      const response = await axios.post(
-        "https://backend-d00uk5u98-johnsons-projects-22e77e85.vercel.app/articles",
-        newArticle
-      );
+      const response = await axios.post(`${API_URL}/articles`, newArticle);
       alert("Article submitted successfully!");
       // Reset form after successful submission
       setArticle({

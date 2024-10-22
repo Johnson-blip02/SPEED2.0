@@ -13,6 +13,9 @@ import {
 import { GetServerSideProps } from "next";
 import { format } from "date-fns";
 
+// Use the environment variable for the backend URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 interface Article {
   _id: string; // Use MongoDB _id
   id: number; // Your custom ID field
@@ -37,7 +40,7 @@ const ModerationPage: React.FC<ModerationPageProps> = ({
   const handleApproval = async (_id: string, isApproved: boolean) => {
     try {
       const res = await axios.put(
-        `https://backend-7uziaorjg-johnsons-projects-22e77e85.vercel.app/articles/${_id}/approve`, // Updated URL with _id
+        `${API_URL}/articles/${_id}/approve`, // Use environment variable
         {
           isApproved: !isApproved, // Toggle approval state
         }
@@ -86,14 +89,11 @@ const ModerationPage: React.FC<ModerationPageProps> = ({
         <TableBody>
           {articles.map((article) => (
             <TableRow key={article._id}>
-              {" "}
-              {/* Use _id as the unique key */}
               <TableCell>{article.title}</TableCell>
               <TableCell>{article.author}</TableCell>
               <TableCell>
                 {format(new Date(article.date), "dd/MM/yyyy")}
-              </TableCell>{" "}
-              {/* Date formatted using date-fns */}
+              </TableCell>
               <TableCell>{article.tags.join(", ")}</TableCell>
               <TableCell>
                 {article.isApproved ? "Approved" : "Pending"}
@@ -119,9 +119,7 @@ const ModerationPage: React.FC<ModerationPageProps> = ({
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const res = await axios.get(
-      "https://backend-7uziaorjg-johnsons-projects-22e77e85.vercel.app/articles/moderation" // Updated URL
-    );
+    const res = await axios.get(`${API_URL}/articles/moderation`); // Use environment variable
 
     const articles = res.data.map((article: any) => ({
       _id: article._id, // Use MongoDB _id

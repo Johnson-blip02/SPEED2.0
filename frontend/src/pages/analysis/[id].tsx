@@ -3,6 +3,8 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { Box, Button, TextField, Typography } from "@mui/material";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 interface Article {
   _id: string; // MongoDB _id
   id: number; // Custom ID
@@ -23,9 +25,7 @@ const EditArticle: React.FC = () => {
   useEffect(() => {
     if (id) {
       axios
-        .get(
-          `https://backend-m63diz2jm-johnsons-projects-22e77e85.vercel.app/articles/${id}`
-        )
+        .get(`${API_URL}/articles/${id}`)
         .then((res) => setArticle(res.data))
         .catch((error) => console.error("Error fetching article:", error));
     }
@@ -33,10 +33,7 @@ const EditArticle: React.FC = () => {
 
   const handleSave = async () => {
     try {
-      await axios.put(
-        `https://backend-m63diz2jm-johnsons-projects-22e77e85.vercel.app/articles/${id}`,
-        article
-      );
+      await axios.put(`${API_URL}/articles/${id}`, article);
       router.push("/analysis"); // Redirect back to AnalysisPage after saving
     } catch (error) {
       console.error("Error updating article:", error);

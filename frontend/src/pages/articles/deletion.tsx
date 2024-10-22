@@ -13,6 +13,8 @@ import {
 import { GetServerSideProps } from "next";
 import { format } from "date-fns";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 interface Article {
   _id: string; // MongoDB _id
   id: number; // Custom ID
@@ -36,9 +38,7 @@ const DeletionPage: React.FC<DeletionPageProps> = ({
 }) => {
   const handleDelete = async (_id: string) => {
     try {
-      const res = await axios.delete(
-        `https://backend-hmsax2oa3-johnsons-projects-22e77e85.vercel.app/articles/${_id}`
-      );
+      const res = await axios.delete(`${API_URL}/articles/${_id}`);
       console.log("Article deleted:", res.data);
       window.location.reload(); // Temporary refresh; use state for better UX
     } catch (error) {
@@ -113,9 +113,7 @@ const DeletionPage: React.FC<DeletionPageProps> = ({
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const res = await axios.get(
-      "https://backend-hmsax2oa3-johnsons-projects-22e77e85.vercel.app/articles"
-    );
+    const res = await axios.get(`${API_URL}/articles`);
 
     const articles = res.data.map((article: any) => ({
       _id: article._id, // Use MongoDB _id

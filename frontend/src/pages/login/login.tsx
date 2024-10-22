@@ -4,6 +4,9 @@ import axios from "axios";
 import Link from "next/link";
 import { AuthContext } from "../../components/Auth/AuthContext"; // Import AuthContext
 
+// Use the environment variable for the backend URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -29,17 +32,15 @@ const Login: React.FC = () => {
     const { email, password } = formData;
 
     try {
-      const response = await axios.post(
-        "https://backend-39hf9k9x6-johnsons-projects-22e77e85.vercel.app//api/users/login",
-        {
-          Email: email,
-          Password: password,
-        }
-      );
+      const response = await axios.post(`${API_URL}/users/login`, {
+        Email: email,
+        Password: password,
+      });
 
       if (response.status === 200) {
+        const { userType } = response.data; // Assuming userType is returned from the backend
         setSuccessMessage("Login successful!");
-        login(email); // Update the context with the logged-in user's email
+        login(email, userType); // Pass both email and userType to login function
         setFormData({ email: "", password: "" });
       }
     } catch (error: any) {

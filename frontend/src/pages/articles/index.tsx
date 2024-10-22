@@ -1,4 +1,3 @@
-// pages/articles/index.tsx
 import { GetServerSideProps } from "next";
 import {
   Table,
@@ -15,6 +14,10 @@ import {
 import { useState } from "react";
 import Link from "next/link"; // Import Link from Next.js
 import { Article } from "../../types/Article"; // Import your Article type
+import axios from "axios";
+
+// Use the environment variable for the backend URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 type ArticlesProps = {
   articles: Article[]; // Define the type for your articles
@@ -64,7 +67,6 @@ export default function Articles({ articles }: ArticlesProps) {
           <TableBody>
             {filteredArticles.map((article) => (
               <TableRow key={article._id}>
-                {" "}
                 {/* Use MongoDB _id */}
                 <TableCell>{article.title}</TableCell>
                 <TableCell>{article.author}</TableCell>
@@ -92,13 +94,9 @@ export default function Articles({ articles }: ArticlesProps) {
 }
 
 // Fetch articles server-side, only including those that are approved
-import axios from "axios";
-
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const res = await axios.get(
-      "https://backend-d00uk5u98-johnsons-projects-22e77e85.vercel.app/articles"
-    ); // No credentials needed
+    const res = await axios.get(`${API_URL}/articles`);
 
     const articles = res.data;
 

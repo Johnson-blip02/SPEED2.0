@@ -17,7 +17,6 @@ router.get("/moderation", async (req, res) => {
   try {
     const articles = await Article.find({
       isApproved: false,
-      isAnalysis: true,
     });
     res.json(articles);
   } catch (error) {
@@ -132,10 +131,13 @@ router.put("/:id/approveAnalysis", async (req, res) => {
   }
 });
 
-// Route to fetch articles where isAnalysis is false
+// Route to fetch articles where isApproved is true and isAnalysis is false
 router.get("/analysis/pending", async (req, res) => {
   try {
-    const articles = await Article.find({ isAnalysis: false });
+    const articles = await Article.find({
+      isApproved: true,
+      isAnalysis: false,
+    });
     res.json(articles);
   } catch (error) {
     res.status(500).json({ message: "Error fetching articles." });

@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const articlesRouter = require("../route/articles"); // Import the routes
+const articlesRouter = require("../route/articles"); // Import the articles routes
+const usersRouter = require("../route/user"); // Import the users routes
 
 const app = express();
 const cors = require("cors");
@@ -8,7 +9,7 @@ const cors = require("cors");
 // Allow requests from your frontend (localhost:3000) during development
 app.use(
   cors({
-    origin: "http://localhost:3000", // Adjust the origin as needed
+    origin: "*", // Adjust the origin as needed
     methods: ["GET", "POST", "PUT", "DELETE"], // Define allowed methods
     credentials: true, // If you want to allow credentials (cookies, etc.)
   })
@@ -38,7 +39,8 @@ app.use(async (req, res, next) => {
 });
 
 // Routes
-app.use("/articles", articlesRouter);
+app.use("/articles", articlesRouter); // Articles routes
+app.use("/users", usersRouter); // User routes
 
 // Basic route
 app.get("/", (req, res) => res.send("Express on Vercel"));

@@ -14,6 +14,8 @@ import { GetServerSideProps } from "next";
 import { format } from "date-fns";
 import { useRouter } from "next/router";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 interface Article {
   _id: string; // MongoDB _id
   id: number; // Custom ID
@@ -44,7 +46,7 @@ const AnalysisPage: React.FC<AnalysisPageProps> = ({
   const handleApprove = async (_id: string) => {
     try {
       const res = await axios.put(
-        `https://backend-d00uk5u98-johnsons-projects-22e77e85.vercel.app/articles/${_id}/approveAnalysis`,
+        `${API_URL}/articles/${_id}/approveAnalysis`,
         { isAnalysis: true } // Send the updated field
       );
       console.log("Article approved for analysis:", res.data);
@@ -129,9 +131,7 @@ const AnalysisPage: React.FC<AnalysisPageProps> = ({
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const res = await axios.get(
-      "https://backend-d00uk5u98-johnsons-projects-22e77e85.vercel.app/articles/analysis/pending"
-    );
+    const res = await axios.get(`${API_URL}/articles/analysis/pending`);
 
     const articles = res.data.map((article: any) => ({
       _id: article._id, // Use MongoDB _id

@@ -4,6 +4,8 @@ import { Typography, Box } from "@mui/material";
 import axios from "axios";
 import { useRouter } from "next/router"; // Import useRouter from Next.js
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 interface Article {
   _id: string;
   title: string;
@@ -52,9 +54,7 @@ const ArticleDetail: React.FC<ArticleProps> = ({ article }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params!; // Get id from URL parameters
   try {
-    const res = await axios.get(
-      `https://backend-d00uk5u98-johnsons-projects-22e77e85.vercel.app/articles/${id}`
-    );
+    const res = await axios.get(`${API_URL}/articles/${id}`);
 
     return {
       props: {

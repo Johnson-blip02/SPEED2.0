@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
 import axios from "axios"; // Import axios for API requests
 
+// Use the environment variable for the backend URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function RegistrationPage() {
   // State to handle form inputs
   const [formData, setFormData] = useState({
@@ -32,15 +35,12 @@ export default function RegistrationPage() {
     }
 
     try {
-      // Send a POST request to the register endpoint
-      const response = await axios.post(
-        "https://backend-39hf9k9x6-johnsons-projects-22e77e85.vercel.app//api/users/register",
-        {
-          Email: email,
-          Password: password,
-          UserType: "user", // Assuming default user type, can be changed as needed
-        }
-      );
+      // Send a POST request to the register endpoint using the environment variable
+      const response = await axios.post(`${API_URL}/users/register`, {
+        Email: email,
+        Password: password,
+        UserType: "User", // Default user type
+      });
 
       // Handle successful registration
       if (response.status === 201) {
