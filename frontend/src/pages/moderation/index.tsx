@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { GetServerSideProps } from "next";
 import { format } from "date-fns";
+import Link from "next/link"; // Import Link from Next.js
 
 // Use the environment variable for the backend URL
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -104,10 +105,20 @@ const ModerationPage: React.FC<ModerationPageProps> = ({
                   color={article.isApproved ? "secondary" : "primary"}
                   onClick={() =>
                     handleApproval(article._id, article.isApproved)
-                  } // Pass _id here
+                  }
                 >
                   {article.isApproved ? "Revoke Approval" : "Approve"}
                 </Button>
+                {/* View More button that links to dynamic page */}
+                <Link href={`/articles/${article._id}`} passHref>
+                  <Button
+                    variant="contained"
+                    color="info"
+                    sx={{ ml: 2 }} // Margin for spacing
+                  >
+                    View More
+                  </Button>
+                </Link>
               </TableCell>
             </TableRow>
           ))}
@@ -119,7 +130,7 @@ const ModerationPage: React.FC<ModerationPageProps> = ({
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const res = await axios.get(`${API_URL}/articles/moderation`); // Use environment variable
+    const res = await axios.get(`${API_URL}/articles/moderation`);
 
     const articles = res.data.map((article: any) => ({
       _id: article._id, // Use MongoDB _id

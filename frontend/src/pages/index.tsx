@@ -46,14 +46,18 @@ export default function Home() {
           <ListItem>
             <ListItemText
               primary="Moderation"
-              secondary="Our dedicated team of experts from the Software Engineering Research Center (SERC) serves as moderators. They meticulously review proposed articles for quality, relevance, and duplication. Only the most valuable contributions proceed to the next step."
+              secondary="
+              Email:moderation@example.com Password:SecurePassword123
+              Our dedicated team of experts from the Software Engineering Research Center (SERC) serves as moderators. They meticulously review proposed articles for quality, relevance, and duplication. Only the most valuable contributions proceed to the next step."
             />
           </ListItem>
 
           <ListItem>
             <ListItemText
               primary="Analysis"
-              secondary="Our team of Analysts, who are SERC staff members, carefully read and analyze the approved articles. They extract vital information such as abstracts, methodologies, and references."
+              secondary="
+              Email:analysis@example.com Password:AnalysisPassword789
+              Our team of Analysts, who are SERC staff members, carefully read and analyze the approved articles. They extract vital information such as abstracts, methodologies, and references."
             />
           </ListItem>
 

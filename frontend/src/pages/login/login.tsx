@@ -3,6 +3,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import Link from "next/link";
 import { AuthContext } from "../../components/Auth/AuthContext"; // Import AuthContext
+import { useRouter } from "next/router"; // Import useRouter to handle redirects
 
 // Use the environment variable for the backend URL
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -16,6 +17,7 @@ const Login: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState("");
 
   const { login } = useContext(AuthContext); // Access login function from AuthContext
+  const router = useRouter(); // Initialize useRouter
 
   // Handle form input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +44,9 @@ const Login: React.FC = () => {
         setSuccessMessage("Login successful!");
         login(email, userType); // Pass both email and userType to login function
         setFormData({ email: "", password: "" });
+
+        // Redirect the user to the home page after successful login
+        router.push("/");
       }
     } catch (error: any) {
       if (error.response && error.response.data) {
@@ -63,6 +68,13 @@ const Login: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         Login
       </Typography>
+      <Typography variant="h6" gutterBottom>
+        Email:moderation@example.com Password:SecurePassword123
+      </Typography>
+      <Typography variant="h6" gutterBottom>
+        Email:analysis@example.com Password:AnalysisPassword789
+      </Typography>
+
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <TextField
           label="Email"
