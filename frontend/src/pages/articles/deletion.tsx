@@ -1,124 +1,148 @@
-// pages/articles/deletion.tsx
-import { GetServerSideProps, NextPage } from "next";
+import React from "react";
+import axios from "axios";
 import {
+  Box,
+  Typography,
   Table,
+  TableBody,
+  TableCell,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  TableContainer,
-  Paper,
   Button,
-  Typography,
 } from "@mui/material";
-import { Article } from "../../types/Article"; // Import your Article type
-import { useState } from "react";
-import { useRouter } from "next/router"; // Import useRouter
+import { GetServerSideProps } from "next";
+import { format } from "date-fns";
 
-type ArticlesProps = {
-  articles: Article[]; // Use your Article type
-};
+interface Article {
+  _id: string; // MongoDB _id
+  id: number; // Custom ID
+  title: string;
+  author: string;
+  date: string;
+  content: string;
+  tags: string[];
+  isApproved: boolean;
+  isAnalysis: boolean;
+}
 
-const DeletionPage: NextPage<ArticlesProps> = ({ articles }) => {
-  const [deletingArticleId, setDeletingArticleId] = useState<number | null>(
-    null
-  );
-  const router = useRouter(); // Initialize router
+interface DeletionPageProps {
+  articles: Article[];
+  fetchError?: boolean;
+}
 
-  const handleDelete = async (id: number) => {
-    setDeletingArticleId(id);
+const DeletionPage: React.FC<DeletionPageProps> = ({
+  articles,
+  fetchError,
+}) => {
+  const handleDelete = async (_id: string) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/articles/${id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        alert(`Article with ID ${id} was deleted successfully.`);
-        // Refresh the page
-        router.replace(router.asPath); // Reload the page
-      } else {
-        alert("Failed to delete the article.");
-      }
+      const res = await axios.delete(
+        `https://backend-hmsax2oa3-johnsons-projects-22e77e85.vercel.app/articles/${_id}`
+      );
+      console.log("Article deleted:", res.data);
+      window.location.reload(); // Temporary refresh; use state for better UX
     } catch (error) {
       console.error("Error deleting article:", error);
-      alert("An error occurred while deleting the article.");
-    } finally {
-      setDeletingArticleId(null);
     }
   };
 
-  return (
-    <div style={{ padding: "20px" }}>
-      <Typography variant="h4" gutterBottom>
-        Delete Articles
-      </Typography>
+  if (fetchError) {
+    return (
+      <Box sx={{ p: 4 }}>
+        <Typography variant="h4" color="error">
+          Error fetching articles. Please try again later.
+        </Typography>
+      </Box>
+    );
+  }
 
-      {/* Table container */}
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell>Author</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Rating</TableCell>
-              <TableCell>Tags</TableCell>
-              <TableCell>Actions</TableCell>
+  if (articles.length === 0) {
+    return (
+      <Box sx={{ p: 4 }}>
+        <Typography variant="h4">No articles found for deletion.</Typography>
+      </Box>
+    );
+  }
+
+  return (
+    <Box sx={{ p: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        Articles Available for Deletion
+      </Typography>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Title</TableCell>
+            <TableCell>Author</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>Tags</TableCell>
+            <TableCell>Status</TableCell>
+            <TableCell>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {articles.map((article) => (
+            <TableRow key={article._id}>
+              {" "}
+              {/* Use _id as the unique key */}
+              <TableCell>{article.title}</TableCell>
+              <TableCell>{article.author}</TableCell>
+              <TableCell>
+                {format(new Date(article.date), "dd/MM/yyyy")}
+              </TableCell>
+              <TableCell>{article.tags.join(", ")}</TableCell>
+              <TableCell>
+                {article.isApproved ? "Approved" : "Pending"}
+              </TableCell>
+              <TableCell>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => handleDelete(article._id)} // Delete handler
+                >
+                  Delete
+                </Button>
+              </TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {articles.map((article) => (
-              <TableRow key={article.id}>
-                <TableCell>{article.title}</TableCell>
-                <TableCell>{article.author}</TableCell>
-                <TableCell>
-                  {new Date(article.date).toISOString().split("T")[0]}{" "}
-                  {/* Ensures yyyy-mm-dd format */}
-                </TableCell>
-                <TableCell>{article.rating}</TableCell>
-                <TableCell>{article.tags.join(", ")}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => handleDelete(article.id)}
-                    disabled={deletingArticleId === article.id}
-                  >
-                    {deletingArticleId === article.id
-                      ? "Deleting..."
-                      : "Delete"}
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+          ))}
+        </TableBody>
+      </Table>
+    </Box>
   );
 };
 
-// Fetch articles from the API and pass them as props
-export const getServerSideProps: GetServerSideProps<
-  ArticlesProps
-> = async () => {
-  const res = await fetch("http://localhost:5000/api/articles"); // Adjust the API URL if necessary
-  const articles = await res.json();
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const res = await axios.get(
+      "https://backend-hmsax2oa3-johnsons-projects-22e77e85.vercel.app/articles"
+    );
 
-  return {
-    props: {
-      articles: articles.map((article: any) => ({
-        id: article.id,
-        title: article.title,
-        author: article.author,
-        date: new Date(article.date).toISOString().split("T")[0], // Convert Date to a string in yyyy-mm-dd format
-        content: article.content,
-        tags: article.tags,
-        isApproved: article.isApproved, // Include in the data but not displayed
-        isAnalysis: article.isAnalysis, // Include isAnalysis property
-        rating: article.rating,
-      })),
-    },
-  };
+    const articles = res.data.map((article: any) => ({
+      _id: article._id, // Use MongoDB _id
+      id: article.id, // Custom ID for display if needed
+      title: article.title,
+      author: article.author,
+      date: article.date,
+      content: article.content,
+      tags: article.tags,
+      isApproved: article.isApproved,
+      isAnalysis: article.isAnalysis,
+    }));
+
+    return {
+      props: {
+        articles,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching articles:", error);
+    return {
+      props: {
+        articles: [],
+        fetchError: true,
+      },
+    };
+  }
 };
 
 export default DeletionPage;

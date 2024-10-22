@@ -42,7 +42,7 @@ export default function SubmitPage() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/articles",
+        "https://backend-d00uk5u98-johnsons-projects-22e77e85.vercel.app/articles",
         newArticle
       );
       alert("Article submitted successfully!");

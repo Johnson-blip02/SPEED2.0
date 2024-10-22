@@ -34,7 +34,7 @@ export default function RegistrationPage() {
     try {
       // Send a POST request to the register endpoint
       const response = await axios.post(
-        "http://localhost:5000/api/users/register",
+        "https://backend-39hf9k9x6-johnsons-projects-22e77e85.vercel.app//api/users/register",
         {
           Email: email,
           Password: password,

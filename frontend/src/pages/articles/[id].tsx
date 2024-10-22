@@ -1,52 +1,72 @@
 // pages/articles/[id].tsx
-
 import { GetServerSideProps } from "next";
-import { Paper, Typography } from "@mui/material";
-import { Article } from "../../types/Article"; // Import the Article type
+import { Typography, Box } from "@mui/material";
+import axios from "axios";
+import { useRouter } from "next/router"; // Import useRouter from Next.js
 
-// Define the props type for the ArticleDetail component
-type ArticleProps = {
-  article: Article; // The article object passed as a prop
-};
+interface Article {
+  _id: string;
+  title: string;
+  author: string;
+  date: string;
+  content: string;
+  tags: string[];
+  isApproved: boolean;
+  rating: number;
+}
 
-// ArticleDetail component to display the article details
-export default function ArticleDetail({ article }: ArticleProps) {
+interface ArticleProps {
+  article: Article;
+}
+
+// Article detail page
+const ArticleDetail: React.FC<ArticleProps> = ({ article }) => {
+  const router = useRouter();
+
+  // Handle edge case where article is not found
+  if (router.isFallback || !article) {
+    return <Typography>Loading...</Typography>;
+  }
+
   return (
-    <Paper style={{ padding: "20px", margin: "20px" }}>
-      {/* Display the article title */}
+    <Box sx={{ padding: "20px" }}>
       <Typography variant="h4" gutterBottom>
         {article.title}
       </Typography>
-
-      {/* Display the author and publication date */}
       <Typography variant="subtitle1" gutterBottom>
-        By {article.author} on {new Date(article.date).toLocaleDateString()}
+        By {article.author} on{" "}
+        {new Date(article.date).toLocaleDateString("en-GB")}
       </Typography>
-
-      {/* Display the article content */}
       <Typography variant="body1" paragraph>
         {article.content}
       </Typography>
-
-      {/* Display the tags associated with the article */}
-      <Typography variant="body2" color="textSecondary">
-        Tags: {article.tags.join(", ")}
+      <Typography variant="body2">
+        Keywords: {article.tags.join(", ")}
       </Typography>
-    </Paper>
+      <Typography variant="body2">Rating: {article.rating}/10</Typography>
+    </Box>
   );
-}
-
-// Fetch article data based on the ID from the URL
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.params!; // Extract the article ID from the URL parameters
-
-  // Fetch the article data from the API
-  const res = await fetch(`http://localhost:5000/api/articles/${id}`);
-  const article = await res.json();
-
-  return {
-    props: {
-      article, // Pass the article data as a prop to the component
-    },
-  };
 };
+
+// Fetch the article server-side using its _id
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.params!; // Get id from URL parameters
+  try {
+    const res = await axios.get(
+      `https://backend-d00uk5u98-johnsons-projects-22e77e85.vercel.app/articles/${id}`
+    );
+
+    return {
+      props: {
+        article: res.data,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching article:", error);
+    return {
+      notFound: true, // Return 404 if article is not found
+    };
+  }
+};
+
+export default ArticleDetail;
